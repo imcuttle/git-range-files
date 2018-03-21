@@ -1,0 +1,25 @@
+{
+  "name": "git-range-files",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "imcuttle",
+    "git-range-files",
+    "git",
+    "range",
+    "commit",
+    "files"
+  ],
+  "author": "imcuttle",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "should": "~2.0.1",
+    "mocha": "^2.0.1"
+  }
+}
