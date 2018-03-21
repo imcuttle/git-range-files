@@ -1,4 +1,4 @@
-# Git Range Files
+# Git Range Files  [![Build Status](https://travis-ci.org/imcuttle/git-range-files.svg?branch=master)](https://travis-ci.org/imcuttle/git-range-files)
 
 This module returns an array of git range files and their status acording to git.
 
