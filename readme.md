@@ -1,16 +1,21 @@
-# Staged Git Files
+# Git Range Files
 
-This module returns an array of staged files and their status acording to git.
+This module returns an array of git range files and their status acording to git.
+
+Inspired By [staged-git-files](https://github.com/mcwhittemore/staged-git-files).
 
 ## Usage
 
-`npm install staged-git-files`
-
+`npm install git-range-files`
 
 ```js
-var sgf = require("staged-git-files");
-sgf(function(err, results){
-	//WHAT EVER YOU SO PLEASE
+var grf = require('git-range-files');
+grf(function(err, results) {
+	// WHAT EVER YOU SO PLEASE
+});
+
+grf({ head: 'f5f240fad3f6...e87900fad3f6' }, function(err, results){
+	// WHAT EVER YOU SO PLEASE
 });
 ```
 
@@ -36,7 +41,7 @@ sgf(function(err, results){
 ## Usage as a cli
 
 ```sh
-$ sgf
+$ grf
 Added package.json
 Modified readme.md
 Renamed index.js
@@ -44,16 +49,16 @@ Renamed index.js
 
 ## API
 
-### sgf(filter, callback)
+### grf({ filter, head }, callback)
 
-Get a list of staged git files
+Get a list of git range files
 
 * filter: string of git status codes. No spaces
 * callback:
 	* err: the error
 	* results: file object array.
 
-### sgf.getHead(callback)
+### grf.getHead(callback)
 
 Get head that will be used in the diff to ID which files are waiting to be staged.
 
@@ -61,15 +66,15 @@ Get head that will be used in the diff to ID which files are waiting to be stage
 	* err: the error
 	* head: the git commit id which is aliased to head.
 
-### sgf.readFile(filename, [options], callback)
+### grf.readFile(filename, [options], callback)
 
-This is a proxy for [fs.readFile](http://nodejs.org/api/fs.html#fs_fs_readfile_filename_options_callback) with one change. The filename will be relative to the `sgf.cwd`
+This is a proxy for [fs.readFile](http://nodejs.org/api/fs.html#fs_fs_readfile_filename_options_callback) with one change. The filename will be relative to the `grf.cwd`
 
-### sgf.debug
+### grf.debug
 
 Boolean that flips logging on and off. By default this is false. If true, all git commands will be console logged.
 
-### sgf.includeContent
+### grf.includeContent
 
 If true, include content will add a `content` or `err` param to the file object.
 
@@ -77,7 +82,7 @@ If true, include content will add a `content` or `err` param to the file object.
 * Content Param: the content of the file staged
 * Err Param: the error message received while trying to read the file.
 
-### sgf.cwd
+### grf.cwd
 
 The current working directory. AKA: where the .git folder you care about is.
 
