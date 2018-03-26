@@ -3,7 +3,6 @@
 var spawn = require('child_process').spawn
 var execSync = require('child_process').execSync
 var fs = require('fs')
-var gitQuotePathDecode = require('./decode')
 
 var sgf = function (options, callback) {
   if (typeof options === 'function') {
@@ -15,7 +14,7 @@ var sgf = function (options, callback) {
       head = options.head
 
   function coreRun(head) {
-    var command = 'git diff --name-status'
+    var command = 'git -c core.quotepath=false diff --name-status'
 
     if (filter.indexOf('R') !== -1) {
       command += ' -M'
@@ -151,7 +150,7 @@ var stdoutToResultsObject = function (stdout) {
     if (line != '') {
       var parts = line.split('\t')
       var result = {
-        filename: gitQuotePathDecode(parts[2] || parts[1]),
+        filename: parts[2] || parts[1],
         status: codeToStatus(parts[0])
       }
 
