@@ -1,6 +1,6 @@
 {
   "name": "git-range-files",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,8 +16,7 @@
   ],
   "author": "imcuttle",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "should": "~2.0.1",
     "mocha": "^2.0.1"
