@@ -14,20 +14,28 @@ var sgf = function (options, callback) {
       head = options.head
 
   function coreRun(head) {
-    var command = 'git -c core.quotepath=false diff --name-status'
-
-    if (filter.indexOf('R') !== -1) {
-      command += ' -M'
-    }
-
-    command += ' --diff-filter=' + filter + ' ' + head
-
-    run(command, function (err, stdout, stderr) {
-      if (err || stderr) {
-        callback(err || new Error(stderr))
-      } else {
-        callback(null, stdoutToResultsObject(stdout))
+    run('git version', function (err, stdout, stderr) {
+      var s = ''
+      if (stdout && /git version ([^\s]+)/.test(stdout)) {
+        if (RegExp.$1.split('.')[0] > 1) {
+          s = '-c core.quotepath=false '
+        }
       }
+
+      var command = 'git ' + s + 'diff --name-status'
+      if (filter.indexOf('R') !== -1) {
+        command += ' -M'
+      }
+
+      command += ' --diff-filter=' + filter + ' ' + head
+
+      run(command, function (err, stdout, stderr) {
+        if (err || stderr) {
+          callback(err || new Error(stderr))
+        } else {
+          callback(null, stdoutToResultsObject(stdout))
+        }
+      })
     })
   }
 
