@@ -6,6 +6,9 @@
   "scripts": {
     "test": "mocha"
   },
+  "bin": {
+    "grf": "./bin.js"
+  },
   "keywords": [
     "imcuttle",
     "git-range-files",
@@ -16,7 +19,9 @@
   ],
   "author": "imcuttle",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "minimist": "^1.2.0"
+  },
   "devDependencies": {
     "should": "~2.0.1",
     "mocha": "^2.0.1"

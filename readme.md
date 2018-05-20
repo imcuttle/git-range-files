@@ -4,6 +4,14 @@ This module returns an array of git range files and their status acording to git
 
 Inspired By [staged-git-files](https://github.com/mcwhittemore/staged-git-files).
 
+## How it works
+
+* git version < 2.0.0 execute
+	git diff --name-status b8c40a94db582718...813f2c4911e926c0
+
+* git version >= 2.0.0 execute
+	git -c core.quotepath=false diff --name-status b8c40a94db582718...813f2c4911e926c0
+
 ## Usage
 
 `npm install git-range-files`
