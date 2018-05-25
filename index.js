@@ -3,6 +3,7 @@
 var spawn = require('child_process').spawn
 var execSync = require('child_process').execSync
 var fs = require('fs')
+var decode = require('./decode')
 
 var sgf = function (options, callback) {
   if (typeof options === 'function') {
@@ -16,9 +17,14 @@ var sgf = function (options, callback) {
   function coreRun(head) {
     run('git version', function (err, stdout, stderr) {
       var s = ''
+      var useDecode = false
       if (stdout && /git version ([^\s]+)/.test(stdout)) {
         if (RegExp.$1.split('.')[0] > 1) {
           s = '-c core.quotepath=false '
+        }
+        else {
+          // Compatible with git version 1
+          useDecode = true
         }
       }
 
@@ -33,7 +39,7 @@ var sgf = function (options, callback) {
         if (err || stderr) {
           callback(err || new Error(stderr))
         } else {
-          callback(null, stdoutToResultsObject(stdout))
+          callback(null, stdoutToResultsObject(stdout, useDecode))
         }
       })
     })
@@ -148,7 +154,7 @@ var codeToStatus = function (code) {
   return map[code.charAt(0)]
 }
 
-var stdoutToResultsObject = function (stdout) {
+var stdoutToResultsObject = function (stdout, useDecode) {
   var results = []
   var lines = stdout.split('\n')
   var iLines = lines.length
@@ -160,6 +166,9 @@ var stdoutToResultsObject = function (stdout) {
       var result = {
         filename: parts[2] || parts[1],
         status: codeToStatus(parts[0])
+      }
+      if (useDecode) {
+        result.filename = decode(result.filename)
       }
 
       if (sgf.includeContent) {
