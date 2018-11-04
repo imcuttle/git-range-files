@@ -4,7 +4,7 @@ This module returns an array of git range files and their status acording to git
 
 Inspired By [staged-git-files](https://github.com/mcwhittemore/staged-git-files).
 
-## How it works
+## How it works?
 
 * git version < 2.0.0 execute
 
@@ -59,11 +59,16 @@ Renamed index.js
 
 ## API
 
-### grf({ filter, head }, callback)
+### grf({ filter, head, relative }, callback)
 
-Get a list of git range files
+Get a list of git range files from `head`
 
 * filter: string of git status codes. No spaces
+* relative: `string` or `boolean` (`true` by default)  
+  When run from a subdirectory of the project, it can be told to exclude changes outside the directory and
+  show pathnames relative to it with this option. When you are not in a subdirectory (e.g. in a bare
+  repository), you can name which subdirectory to make the output relative to by giving a <path> as an
+  argument.
 * callback:
 	* err: the error
 	* results: file object array.

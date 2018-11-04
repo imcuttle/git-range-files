@@ -3,6 +3,7 @@
 var spawn = require('child_process').spawn
 var execSync = require('child_process').execSync
 var fs = require('fs')
+var nps = require('path')
 var decode = require('./decode')
 
 var sgf = function (options, callback) {
@@ -12,7 +13,8 @@ var sgf = function (options, callback) {
   }
   options = options || {}
   var filter = options.filter || 'ACDMRTUXB',
-      head = options.head
+      head = options.head,
+      relative = typeof options.relative === 'undefined' ? true : options.relative
 
   function coreRun(head) {
     run('git version', function (err, stdout, stderr) {
@@ -29,6 +31,11 @@ var sgf = function (options, callback) {
       }
 
       var command = 'git ' + s + 'diff --name-status'
+      if (relative === true) {
+        command += ' --relative'
+      } else if (typeof relative === 'string') {
+        command += ' --relative=' + nps.join(sgf.cwd, relative)
+      }
       if (filter.indexOf('R') !== -1) {
         command += ' -M'
       }
@@ -96,7 +103,7 @@ var run = function (command, callback) {
   var args = bits.slice(1)
 
   var cmd = spawn(bits[0], args, {
-    cwd: module.exports.cwd
+    cwd: sgf.cwd
   })
 
   var stdout = ''
